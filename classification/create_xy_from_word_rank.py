@@ -2,14 +2,17 @@ import os
 import re
 
 
-def create_xy_from_rank(sample_type, labels, word_rank):
+def create_xy_from_word_rank(sample_type, labels, word_rank, base_path='blogs'):
     x, y = [], []
 
     for label in labels:
-        blog_files_names = os.listdir('blogs/' + label + '/'+sample_type)
+        blog_files_names = os.listdir(base_path + '/' + label + '/' + sample_type)
 
         for blog_file_name in blog_files_names:
-            blog_file = open('blogs/' + label + '/'+sample_type+'/' + blog_file_name, 'r')
+            blog_file_path = base_path + '/' + label + '/' + sample_type + '/' + blog_file_name
+            print "creating feature vector from " + blog_file_path
+
+            blog_file = open(blog_file_path, 'r')
             blog_text = blog_file.read()
             blog_words = re.split(r'\W+', blog_text)
             blog_file.close()

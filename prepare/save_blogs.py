@@ -2,7 +2,7 @@ import re
 import urllib2
 
 
-def save_blogs(blog_urls_path):
+def save_blogs(blog_urls_path, data_base_path):
     stop_words = []
     blog_index = 0
     data_type = blog_urls_path.split('_')[2]
@@ -13,8 +13,9 @@ def save_blogs(blog_urls_path):
             label = blog_url_and_label.split(',')[1].strip()
 
             blog_web_page = urllib2.urlopen(url)
+            print "Downloaded " + blog_web_page
 
-            blog_file = open('blogs/'+label+'/'+data_type + '/' + str(blog_index) + '.txt', 'w')
+            blog_file = open(data_base_path + '/' + label + '/' + data_type + '/' + str(blog_index) + '.txt', 'w')
 
             for line in blog_web_page:
                 line = line.strip()
@@ -27,5 +28,10 @@ def save_blogs(blog_urls_path):
             blog_index += 1
 
         except:
+            print "Failed downloading " + url
             # if there was an error downloading the file just move to the next one
             continue
+
+
+def get_stop_words():
+    return []
